@@ -14,8 +14,9 @@
       pip: name=docker
   tasks:
     - name: Create Apache container
-      docker_container:
-        name: webapp
-        image: httpd
-        ports:
-          - "80:80"
+      community.docker.docker_container:
+            name: webapp
+            image: httpd
+            state: started
+            ports:
+              - 8080:80
