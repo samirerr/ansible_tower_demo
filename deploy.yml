@@ -13,10 +13,8 @@
     - name: Install docker python3
       pip: name=docker
   tasks:
-    - name: Create Apache container
-      community.docker.docker_container:
-            name: webapp
-            image: httpd
-            state: started
-            ports:
-              - 8080:80
+    - name: "pull httpd image"
+      docker_image:
+        name: httpd
+        state: present
+   
