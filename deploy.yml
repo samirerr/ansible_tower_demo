@@ -13,8 +13,25 @@
     - name: Install docker python3
       pip: name=docker
   tasks:
-    - name: "pull httpd image"
-      docker_image:
-        name: httpd
-        state: present
+    - name: "Configuring yum repository for Docker"
+      yum_repository:
+        name: "docker"
+        description: "docker repo"
+        gpgcheck: no
+        baseurl: "https://download.docker.com/linux/centos/7/x86_64/stable/"
+        
+    - name: "Installing the Docker"
+      command: "yum install docker-ce --nobest -y"
+     
+    - name: "Strating Docker Services..."
+      service:
+        name: "docker"
+        state: started
+        
+    - name: Create Apache container
+      docker_container:
+        name: webapp
+        image: httpd
+        ports:
+          - "80:80"
    
